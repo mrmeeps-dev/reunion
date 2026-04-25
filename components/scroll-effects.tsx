@@ -5,6 +5,8 @@ import { useEffect } from 'react';
 export function ScrollEffects() {
   useEffect(() => {
     const nav = document.getElementById('site-nav');
+    const registerSection = document.getElementById('register');
+    const mobileRegisterCta = document.getElementById('mobile-register-cta');
     const onScroll = () => {
       if (!nav) return;
       if (window.scrollY > 12) nav.classList.add('nav-scrolled');
@@ -34,9 +36,28 @@ export function ScrollEffects() {
 
     elements.forEach((element) => observer.observe(element));
 
+    let ctaObserver: IntersectionObserver | null = null;
+    if (registerSection && mobileRegisterCta) {
+      ctaObserver = new IntersectionObserver(
+        (entries) => {
+          const entry = entries[0];
+          if (!entry) return;
+
+          if (entry.isIntersecting) {
+            mobileRegisterCta.classList.add('pointer-events-none', 'translate-y-3', 'opacity-0');
+          } else {
+            mobileRegisterCta.classList.remove('pointer-events-none', 'translate-y-3', 'opacity-0');
+          }
+        },
+        { rootMargin: '-72px 0px 0px 0px', threshold: 0.05 },
+      );
+      ctaObserver.observe(registerSection);
+    }
+
     return () => {
       window.removeEventListener('scroll', onScroll);
       observer.disconnect();
+      ctaObserver?.disconnect();
     };
   }, []);
 

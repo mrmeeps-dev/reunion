@@ -1,6 +1,7 @@
 import { ScrollEffects } from '@/components/scroll-effects';
 import { ProtectedEmailLink } from '@/components/protected-email-link';
 import { ProtectedPhoneLink } from '@/components/protected-phone-link';
+import { AttendeeBadges } from '@/components/attendee-badges';
 import Image from 'next/image';
 
 const ATTENDEES_CSV_URL =
@@ -181,80 +182,6 @@ export default async function Home() {
           </div>
         </section>
 
-        <section
-          id="register"
-          className="reveal relative section-shell scroll-mt-24 bg-gradient-to-b from-rose-50/45 via-stone-50 to-stone-100 md:scroll-mt-28"
-          aria-labelledby="registration-heading"
-          data-reveal
-        >
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-rose-200/55 to-transparent" aria-hidden="true" />
-          <div className="section-frame relative">
-            <div className="text-center">
-              <p className="section-kicker">Simple Signup</p>
-              <h2 id="registration-heading" className="section-heading">Registration &amp; Payment</h2>
-              <p className="section-subheading">Complete the form below, then choose the payment option that works best for you.</p>
-            </div>
-
-            <div className="grid gap-6 md:grid-cols-3">
-              <article className="panel p-6 text-left md:col-span-1">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-500">How It Works</p>
-                <ol className="mt-4 space-y-4 text-stone-700">
-                  <li><p className="font-semibold text-stone-900">1. Fill out registration form</p><p className="mt-1 text-sm">Share attendee names and key details.</p></li>
-                  <li><p className="font-semibold text-stone-900">2. Send payment</p><p className="mt-1 text-sm">Use Zelle, Venmo, or mail a check.</p></li>
-                  <li><p className="font-semibold text-stone-900">3. Get confirmation</p><p className="mt-1 text-sm">Committee follows up if anything is needed.</p></li>
-                </ol>
-              </article>
-              <div className="panel md:col-span-2">
-                <div className="relative h-[42rem] w-full overflow-y-auto rounded-2xl">
-                  <iframe title="Sahuaro High School Class of 1976 reunion registration form" src="https://docs.google.com/forms/d/e/1FAIpQLSddoWM9pf6YTtNv0rhwUqBMQKLck0ZzTj9rVCmnfXyTWcNnVQ/viewform?embedded=true" className="absolute left-0 top-0 h-full min-h-[640px] w-full border-0" loading="lazy" />
-                </div>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-6 lg:gap-8">
-              <article className="h-full rounded-2xl border border-stone-200 bg-slate-50 p-7 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl md:p-8">
-                <h4 className="text-xl font-bold text-stone-900 md:text-2xl">Zelle</h4>
-                <p className="mt-2 text-xs uppercase tracking-[0.22em] text-stone-500">Digital payment</p>
-                <p className="mt-5 text-lg leading-relaxed text-stone-700 md:text-xl">
-                  Send payment to Lee Ann at{' '}
-                  <ProtectedPhoneLink className="font-semibold text-stone-900 underline decoration-stone-300 underline-offset-4 transition-colors duration-200 hover:text-brand" />
-                  .
-                </p>
-                <div className="mt-5">
-                  <img src="/zelle.png" alt="Zelle payment QR code" className="mx-auto w-full max-w-[13.5rem] rounded-xl border border-stone-200 object-cover shadow-sm" />
-                </div>
-              </article>
-
-              <article className="h-full rounded-2xl border border-gray-200 bg-slate-50 p-7 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl md:p-8">
-                <h4 className="text-xl font-bold text-stone-900 md:text-2xl">Venmo</h4>
-                <p className="mt-2 text-xs uppercase tracking-[0.22em] text-stone-500">Digital payment</p>
-                <div className="mt-5">
-                  <img src="/venmo.jpg" alt="Venmo payment QR code" className="mx-auto w-full max-w-[13.5rem] rounded-xl border border-stone-200 object-cover shadow-sm" />
-                  <p className="mt-3 text-center text-sm text-stone-600">Open Venmo and scan this code.</p>
-                </div>
-              </article>
-
-              <article className="h-full rounded-2xl border border-stone-200 bg-stone-50/70 p-7 shadow-sm transition-all duration-300 hover:shadow-md md:p-8">
-                <h4 className="text-xl font-bold text-stone-900 md:text-2xl">Mail a check</h4>
-                <p className="mt-2 text-xs uppercase tracking-[0.22em] text-stone-500">Backup option</p>
-                <p className="mt-5 text-lg leading-relaxed text-stone-700 md:text-xl">
-                  Send checks to Scott Sanders,
-                  <br />
-                  <span className="font-medium text-stone-500">23173 Pineywood Circle, California, MD 20619</span>.
-                </p>
-                <a
-                  href="https://www.google.com/maps/search/?api=1&query=23173+Pineywood+Circle,+California,+MD+20619"
-                  className="mt-6 inline-flex rounded-full border border-stone-300 px-5 py-2.5 text-sm font-semibold text-stone-700 transition-colors duration-200 hover:bg-stone-100"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  View mailing address
-                </a>
-              </article>
-            </div>
-          </div>
-        </section>
-
         <section id="hotels" className="reveal section-shell scroll-mt-24 bg-white md:scroll-mt-28" aria-labelledby="travel-heading" data-reveal>
           <div className="section-frame">
             <div className="text-center">
@@ -332,19 +259,15 @@ export default async function Home() {
               <p className="section-subheading">
                 {attendees.length > 0 ? `${attendees.length} classmates are currently listed.` : 'Attendee names are loading or temporarily unavailable.'}
               </p>
+              {attendees.length > 0 ? (
+                <p className="mx-auto mt-3 max-w-2xl text-base leading-relaxed text-stone-600 md:text-lg">
+                  Every name here is part of the story. We can&apos;t wait to celebrate together at the reunion.
+                </p>
+              ) : null}
             </div>
 
             {attendees.length > 0 ? (
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {attendees.map((name) => (
-                  <div
-                    key={name}
-                    className="rounded-xl border border-stone-200 bg-stone-50 px-4 py-3 text-base font-medium text-stone-800 shadow-sm transition-colors duration-200 hover:bg-white md:text-lg"
-                  >
-                    {name}
-                  </div>
-                ))}
-              </div>
+              <AttendeeBadges names={attendees} />
             ) : (
               <div className="mx-auto max-w-2xl rounded-2xl border border-stone-200 bg-stone-50 p-6 text-center text-stone-600 shadow-sm md:p-8 md:text-lg">
                 We&apos;ll publish the attendee list here as soon as it&apos;s available.
@@ -363,7 +286,97 @@ export default async function Home() {
               <details className="faq-item"><summary className="cursor-pointer text-lg font-semibold text-stone-900">Can I bring a guest?</summary><p className="mt-3 text-stone-700">Yes. Include guest details in the registration form so we can plan seating and meal counts.</p></details>
               <details className="faq-item"><summary className="cursor-pointer text-lg font-semibold text-stone-900">What happens after I register?</summary><p className="mt-3 text-stone-700">You complete payment, then the reunion committee confirms your registration if any additional details are needed.</p></details>
               <details className="faq-item"><summary className="cursor-pointer text-lg font-semibold text-stone-900">Do I need tickets for both events?</summary><p className="mt-3 text-stone-700">Friday dinner is ticketed. Saturday meetup is no-host and casual drop-in.</p></details>
-              <details className="faq-item"><summary className="cursor-pointer text-lg font-semibold text-stone-900">Who should I contact with questions?</summary><p className="mt-3 text-stone-700">Use the committee email link in the footer and we will get back to you promptly.</p></details>
+              <details className="faq-item">
+                <summary className="cursor-pointer text-lg font-semibold text-stone-900">Who should I contact with questions?</summary>
+                <p className="mt-3 text-stone-700">
+                  Email{' '}
+                  <ProtectedEmailLink
+                    user="sahuaroclassof1976"
+                    domain="gmail.com"
+                    subject="Sahuaro High School Class of 1976 Reunion"
+                    className="font-semibold text-stone-900 underline decoration-stone-300 underline-offset-4 transition-colors duration-200 hover:text-brand"
+                  >
+                    sahuaroclassof1976@gmail.com
+                  </ProtectedEmailLink>{' '}
+                  or call Lee Ann at{' '}
+                  <ProtectedPhoneLink className="font-semibold text-stone-900 underline decoration-stone-300 underline-offset-4 transition-colors duration-200 hover:text-brand" />
+                  .
+                </p>
+              </details>
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="register"
+          className="reveal relative section-shell scroll-mt-24 bg-gradient-to-b from-rose-50/45 via-stone-50 to-stone-100 md:scroll-mt-28"
+          aria-labelledby="registration-heading"
+          data-reveal
+        >
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-rose-200/55 to-transparent" aria-hidden="true" />
+          <div className="section-frame relative">
+            <div className="text-center">
+              <p className="section-kicker">Simple Signup</p>
+              <h2 id="registration-heading" className="section-heading">Registration &amp; Payment</h2>
+              <p className="section-subheading">Complete the form below, then choose the payment option that works best for you.</p>
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-3">
+              <article className="panel p-6 text-left md:col-span-1">
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-500">How It Works</p>
+                <ol className="mt-4 space-y-4 text-stone-700">
+                  <li><p className="font-semibold text-stone-900">1. Fill out registration form</p><p className="mt-1 text-sm">Share attendee names and key details.</p></li>
+                  <li><p className="font-semibold text-stone-900">2. Send payment</p><p className="mt-1 text-sm">Use Zelle, Venmo, or mail a check.</p></li>
+                  <li><p className="font-semibold text-stone-900">3. Get confirmation</p><p className="mt-1 text-sm">Committee follows up if anything is needed.</p></li>
+                </ol>
+              </article>
+              <div className="panel md:col-span-2">
+                <div className="relative h-[42rem] w-full overflow-y-auto rounded-2xl">
+                  <iframe title="Sahuaro High School Class of 1976 reunion registration form" src="https://docs.google.com/forms/d/e/1FAIpQLSddoWM9pf6YTtNv0rhwUqBMQKLck0ZzTj9rVCmnfXyTWcNnVQ/viewform?embedded=true" className="absolute left-0 top-0 h-full min-h-[640px] w-full border-0" loading="lazy" />
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-6 lg:gap-8">
+              <article className="h-full rounded-2xl border border-stone-200 bg-slate-50 p-7 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl md:p-8">
+                <h4 className="text-xl font-bold text-stone-900 md:text-2xl">Zelle</h4>
+                <p className="mt-2 text-xs uppercase tracking-[0.22em] text-stone-500">Digital payment</p>
+                <p className="mt-5 text-lg leading-relaxed text-stone-700 md:text-xl">
+                  Send payment to Lee Ann at{' '}
+                  <ProtectedPhoneLink className="font-semibold text-stone-900 underline decoration-stone-300 underline-offset-4 transition-colors duration-200 hover:text-brand" />
+                  .
+                </p>
+                <div className="mt-5">
+                  <img src="/zelle.png" alt="Zelle payment QR code" className="mx-auto w-full max-w-[13.5rem] rounded-xl border border-stone-200 object-cover shadow-sm" />
+                </div>
+              </article>
+
+              <article className="h-full rounded-2xl border border-gray-200 bg-slate-50 p-7 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl md:p-8">
+                <h4 className="text-xl font-bold text-stone-900 md:text-2xl">Venmo</h4>
+                <p className="mt-2 text-xs uppercase tracking-[0.22em] text-stone-500">Digital payment</p>
+                <div className="mt-5">
+                  <img src="/venmo.jpg" alt="Venmo payment QR code" className="mx-auto w-full max-w-[13.5rem] rounded-xl border border-stone-200 object-cover shadow-sm" />
+                  <p className="mt-3 text-center text-sm text-stone-600">Open Venmo and scan this code.</p>
+                </div>
+              </article>
+
+              <article className="h-full rounded-2xl border border-stone-200 bg-stone-50/70 p-7 shadow-sm transition-all duration-300 hover:shadow-md md:p-8">
+                <h4 className="text-xl font-bold text-stone-900 md:text-2xl">Mail a check</h4>
+                <p className="mt-2 text-xs uppercase tracking-[0.22em] text-stone-500">Backup option</p>
+                <p className="mt-5 text-lg leading-relaxed text-stone-700 md:text-xl">
+                  Send checks to Scott Sanders,
+                  <br />
+                  <span className="font-medium text-stone-500">23173 Pineywood Circle, California, MD 20619</span>.
+                </p>
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=23173+Pineywood+Circle,+California,+MD+20619"
+                  className="mt-6 inline-flex rounded-full border border-stone-300 px-5 py-2.5 text-sm font-semibold text-stone-700 transition-colors duration-200 hover:bg-stone-100"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View mailing address
+                </a>
+              </article>
             </div>
           </div>
         </section>
@@ -407,7 +420,7 @@ export default async function Home() {
         </p>
       </footer>
 
-      <div className="fixed inset-x-4 bottom-4 z-50 md:hidden">
+      <div id="mobile-register-cta" className="fixed inset-x-4 bottom-4 z-50 transition-all duration-300 md:hidden">
         <a href="#register" className="inline-flex w-full items-center justify-center rounded-full bg-brand px-6 py-4 text-lg font-semibold text-white shadow-xl shadow-brand/30 transition-colors duration-200 hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand">
           Register for Reunion
         </a>
