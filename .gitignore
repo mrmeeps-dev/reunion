@@ -1,7 +1,9 @@
 # Dependencies
 node_modules/
 
-# NestJS build
+# Next.js build outputs
+.next/
+out/
 dist/
 
 # Tests & coverage

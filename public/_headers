@@ -1,5 +1,4 @@
-# For Cloudflare Pages: deploy the contents of `public/` as a static mirror, or use as a reference
-# when fronting this app with Cloudflare CDN.
+# Cloudflare Pages cache hints for Next.js static export assets.
 
-/styles.css
+/_next/static/*
   Cache-Control: public, max-age=31536000, immutable
