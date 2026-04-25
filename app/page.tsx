@@ -282,11 +282,11 @@ export default async function Home() {
               <p className="section-kicker">Know Before You Go</p>
               <h2 id="faq-heading" className="section-heading">Frequently Asked Questions</h2>
             </div>
-            <div className="mx-auto grid max-w-5xl gap-4 md:grid-cols-2">
-              <details className="faq-item"><summary className="cursor-pointer text-lg font-semibold text-stone-900">Can I bring a guest?</summary><p className="mt-3 text-stone-700">Yes. Include guest details in the registration form so we can plan seating and meal counts.</p></details>
-              <details className="faq-item"><summary className="cursor-pointer text-lg font-semibold text-stone-900">What happens after I register?</summary><p className="mt-3 text-stone-700">You complete payment, then the reunion committee confirms your registration if any additional details are needed.</p></details>
-              <details className="faq-item"><summary className="cursor-pointer text-lg font-semibold text-stone-900">Do I need tickets for both events?</summary><p className="mt-3 text-stone-700">Friday dinner is ticketed. Saturday meetup is no-host and casual drop-in.</p></details>
-              <details className="faq-item">
+            <div className="mx-auto grid max-w-5xl items-start gap-4 md:grid-cols-2">
+              <details className="faq-item h-fit"><summary className="cursor-pointer text-lg font-semibold text-stone-900">Can I bring a guest?</summary><p className="mt-3 text-stone-700">Yes. Include guest details in the registration form so we can plan seating and meal counts.</p></details>
+              <details className="faq-item h-fit"><summary className="cursor-pointer text-lg font-semibold text-stone-900">What happens after I register?</summary><p className="mt-3 text-stone-700">You complete payment, then the reunion committee confirms your registration if any additional details are needed.</p></details>
+              <details className="faq-item h-fit"><summary className="cursor-pointer text-lg font-semibold text-stone-900">Do I need tickets for both events?</summary><p className="mt-3 text-stone-700">Friday dinner is ticketed. Saturday meetup is no-host and casual drop-in.</p></details>
+              <details className="faq-item h-fit">
                 <summary className="cursor-pointer text-lg font-semibold text-stone-900">Who should I contact with questions?</summary>
                 <p className="mt-3 text-stone-700">
                   Email{' '}
