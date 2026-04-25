@@ -5,6 +5,8 @@ node_modules/
 .next/
 out/
 dist/
+.open-next/
+.wrangler/
 
 # Tests & coverage
 coverage/
@@ -19,6 +21,7 @@ npm-debug.log*
 .env
 .env.*
 !.env.example
+.dev.vars
 
 # OS & editors
 .DS_Store

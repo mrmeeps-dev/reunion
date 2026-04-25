@@ -402,7 +402,9 @@ export default async function Home() {
             Back to top
           </a>
         </div>
-        <p className="mt-12 text-center text-base text-stone-400 md:text-lg">© 2026 Sahuaro High School Class of 1976. All rights reserved.</p>
+        <p className="mt-12 px-4 text-center text-sm leading-relaxed text-stone-400 sm:text-base md:text-lg">
+          © 2026 Sahuaro High School Class of 1976. All rights reserved.
+        </p>
       </footer>
 
       <div className="fixed inset-x-4 bottom-4 z-50 md:hidden">
