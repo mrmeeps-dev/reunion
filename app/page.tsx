@@ -120,7 +120,9 @@ export default async function Home() {
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(153,0,0,.25),transparent_40%),radial-gradient(circle_at_80%_100%,rgba(217,119,6,.22),transparent_40%)]" />
 
         <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center justify-center text-center">
-          <p className="section-kicker text-stone-100">October 9-10, 2026 • Tucson, Arizona</p>
+          <p className="mt-1 text-base font-semibold tracking-[0.08em] text-white sm:text-lg md:text-xl">
+            October 9-10, 2026 • Tucson, Arizona
+          </p>
           <h1 className="mt-4 text-5xl font-extrabold leading-[1.08] tracking-tight text-white md:text-6xl">
             Sahuaro High School Class of <span className="inline-flex items-baseline gap-[0.075em] whitespace-nowrap tabular-nums tracking-normal">&rsquo;76</span>
           </h1>
@@ -153,11 +155,19 @@ export default async function Home() {
             </div>
 
             <div className="grid gap-8 lg:grid-cols-2 lg:gap-10">
-              <article className="panel space-y-6 p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl md:space-y-8 md:p-10">
+              <article className="panel space-y-5 p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl md:space-y-6 md:p-10">
                 <p className="text-sm font-medium uppercase tracking-wide text-stone-500">Friday, Oct 9</p>
                 <h3 className="text-2xl font-extrabold leading-tight tracking-tight text-stone-900 md:text-[1.65rem] lg:text-3xl">The Big Event</h3>
                 <p className="text-lg leading-relaxed text-stone-700 md:text-xl">Ticketed dinner at the Savoy Opera House in Trail Dust Town.</p>
-                <a href="https://www.google.com/maps/search/?api=1&query=6541+E+Tanque+Verde+Rd+%2313%2C+Tucson%2C+AZ+85715" className="modern-link text-lg md:text-xl" target="_blank" rel="noopener noreferrer">
+                <p className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-base font-semibold leading-relaxed text-stone-800 md:text-lg">
+                  Price is $76 and must be paid by September 22nd.
+                </p>
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=6541+E+Tanque+Verde+Rd+%2313%2C+Tucson%2C+AZ+85715"
+                  className="modern-link mt-1 block w-fit text-base leading-snug md:text-lg"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   6541 E Tanque Verde Rd #13, Tucson, AZ 85715
                 </a>
                 <div className="rounded-2xl border border-stone-200 bg-gradient-to-br from-stone-50 to-stone-100 p-5">
@@ -166,15 +176,23 @@ export default async function Home() {
                 </div>
               </article>
 
-              <article className="panel space-y-6 p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl md:space-y-8 md:p-10">
+              <article className="panel space-y-5 p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl md:space-y-6 md:p-10">
                 <p className="text-sm font-medium uppercase tracking-wide text-stone-500">Saturday, Oct 10</p>
                 <h3 className="text-2xl font-extrabold leading-tight tracking-tight text-stone-900 md:text-[1.65rem] lg:text-3xl">Casual Meetup</h3>
                 <p className="text-lg leading-relaxed text-stone-700 md:text-xl">&ldquo;No-host&rdquo; event at Three Canyon Beer and Wine Garden.</p>
-                <a href="https://www.google.com/maps/search/?api=1&query=4999+N+Sabino+Canyon+Rd%2C+Tucson%2C+AZ+85750" className="modern-link text-lg md:text-xl" target="_blank" rel="noopener noreferrer">
+                <p className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-base font-semibold leading-relaxed text-emerald-900 md:text-lg">
+                  Free! Drinks and food available for purchase.
+                </p>
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=4999+N+Sabino+Canyon+Rd%2C+Tucson%2C+AZ+85750"
+                  className="modern-link mt-1 block w-fit text-base leading-snug md:text-lg"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   4999 N Sabino Canyon Rd, Tucson, AZ 85750
                 </a>
                 <div className="rounded-2xl border border-stone-200 bg-gradient-to-br from-stone-50 to-stone-100 p-5">
-                  <p className="text-sm text-stone-600">2:00 PM • Drop in, mingle, and catch up at your own pace</p>
+                  <p className="text-sm text-stone-600">4pm-9pm • Drop in, mingle, and catch up at your own pace</p>
                   <a href="https://www.google.com/maps/search/?api=1&query=4999+N+Sabino+Canyon+Rd%2C+Tucson%2C+AZ+85750" className="mt-3 inline-flex rounded-full border border-stone-300 px-4 py-2 text-sm font-semibold text-stone-800 transition-colors duration-200 hover:bg-white" target="_blank" rel="noopener noreferrer">Open directions</a>
                 </div>
               </article>
@@ -286,6 +304,12 @@ export default async function Home() {
               <details className="faq-item h-fit"><summary className="cursor-pointer text-lg font-semibold text-stone-900">Can I bring a guest?</summary><p className="mt-3 text-stone-700">Yes. Include guest details in the registration form so we can plan seating and meal counts.</p></details>
               <details className="faq-item h-fit"><summary className="cursor-pointer text-lg font-semibold text-stone-900">What happens after I register?</summary><p className="mt-3 text-stone-700">You complete payment, then the reunion committee confirms your registration if any additional details are needed.</p></details>
               <details className="faq-item h-fit"><summary className="cursor-pointer text-lg font-semibold text-stone-900">Do I need tickets for both events?</summary><p className="mt-3 text-stone-700">Friday dinner is ticketed. Saturday meetup is no-host and casual drop-in.</p></details>
+              <details className="faq-item h-fit">
+                <summary className="cursor-pointer text-lg font-semibold text-stone-900">Which Sahuaro classes are invited?</summary>
+                <p className="mt-3 text-stone-700">
+                  While the 50 Year Reunion event primarily celebrates the Class of 1976, anyone is invited to attend, particularly those from the classes of 1975 &amp; 1977.
+                </p>
+              </details>
               <details className="faq-item h-fit">
                 <summary className="cursor-pointer text-lg font-semibold text-stone-900">Who should I contact with questions?</summary>
                 <p className="mt-3 text-stone-700">
