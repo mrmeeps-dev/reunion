@@ -110,7 +110,7 @@ export default async function Home() {
             <li><a href="#faq" className="rounded-sm transition-colors duration-200 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2">FAQ</a></li>
           </ul>
 
-          <a href="#register" className="btn-primary shrink-0 px-5 py-2.5 text-sm md:px-6 md:text-base">Register Now</a>
+          <a href="#register" className="btn-primary hidden shrink-0 px-5 py-2.5 text-sm md:inline-flex md:px-6 md:text-base">Register Now</a>
         </div>
       </nav>
 
