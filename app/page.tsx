@@ -110,7 +110,7 @@ export default async function Home() {
             <li><a href="#faq" className="rounded-sm transition-colors duration-200 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2">FAQ</a></li>
           </ul>
 
-          <a href="#register" className="btn-primary hidden shrink-0 px-5 py-2.5 text-sm md:inline-flex md:px-6 md:text-base">Register Now</a>
+          <a href="#register" className="btn-primary shrink-0 px-5 py-2.5 text-sm md:px-6 md:text-base">Register Now</a>
         </div>
       </nav>
 
@@ -444,11 +444,6 @@ export default async function Home() {
         </p>
       </footer>
 
-      <div id="mobile-register-cta" className="fixed inset-x-4 bottom-4 z-50 transition-all duration-300 md:hidden">
-        <a href="#register" className="inline-flex w-full items-center justify-center rounded-full bg-brand px-6 py-4 text-lg font-semibold text-white shadow-xl shadow-brand/30 transition-colors duration-200 hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand">
-          Register for Reunion
-        </a>
-      </div>
     </>
   );
 }
