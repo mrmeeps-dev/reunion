@@ -355,7 +355,7 @@ export default async function Home() {
                 <h4 className="text-xl font-bold text-stone-900 md:text-2xl">Venmo</h4>
                 <p className="mt-2 text-xs uppercase tracking-[0.22em] text-stone-500">Digital payment</p>
                 <div className="mt-5">
-                  <img src="/venmo.jpg" alt="Venmo payment QR code" className="mx-auto w-full max-w-[13.5rem] rounded-xl border border-stone-200 object-cover shadow-sm" />
+                  <img src="/venmo.png" alt="Venmo payment QR code" className="mx-auto w-full max-w-[13.5rem] rounded-xl border border-stone-200 object-cover shadow-sm" />
                   <p className="mt-3 text-center text-sm text-stone-600">Open Venmo and scan this code.</p>
                 </div>
               </article>
