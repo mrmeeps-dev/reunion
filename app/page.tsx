@@ -2,6 +2,7 @@ import { ScrollEffects } from '@/components/scroll-effects';
 import { ProtectedEmailLink } from '@/components/protected-email-link';
 import { ProtectedPhoneLink } from '@/components/protected-phone-link';
 import { AttendeeBadges } from '@/components/attendee-badges';
+import { MemoriesGallery } from '@/components/memories-gallery';
 import Image from 'next/image';
 
 const ATTENDEES_CSV_URL =
@@ -266,6 +267,7 @@ export default async function Home() {
                 Submit photos
               </ProtectedEmailLink>
             </div>
+            <MemoriesGallery />
           </div>
         </section>
 
@@ -359,6 +361,18 @@ export default async function Home() {
                   <iframe title="Sahuaro High School Class of 1976 reunion registration form" src="https://docs.google.com/forms/d/e/1FAIpQLSddoWM9pf6YTtNv0rhwUqBMQKLck0ZzTj9rVCmnfXyTWcNnVQ/viewform?embedded=true" className="absolute left-0 top-0 h-full min-h-[640px] w-full border-0" loading="lazy" />
                 </div>
               </div>
+            </div>
+
+            <div className="mt-8 rounded-2xl border border-rose-200 bg-gradient-to-r from-rose-50 via-amber-50 to-stone-50 p-5 shadow-sm md:p-6">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-rose-700">Payment Quick Guide</p>
+              <p className="mt-2 text-base leading-relaxed text-stone-800 md:text-lg">
+                Friday dinner is <span className="font-semibold text-stone-900">$76 per person</span> (due by{' '}
+                <span className="font-semibold text-stone-900">September 22nd</span>). Saturday gathering is{' '}
+                <span className="font-semibold text-emerald-800">free</span>, with drinks and food available for purchase.
+              </p>
+              <p className="mt-2 text-sm text-stone-700 md:text-base">
+                Include your name and <span className="font-semibold text-stone-900">"Class of '76 reunion"</span> in the memo so we can match your payment quickly.
+              </p>
             </div>
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-6 lg:gap-8">
