@@ -116,7 +116,7 @@ export default async function Home() {
       </nav>
 
       <header className="relative flex min-h-[min(90vh,56rem)] items-center justify-center overflow-hidden px-4 py-16 sm:min-h-[84vh]">
-        <div className="absolute inset-0 bg-hero-aerial bg-cover bg-center" role="img" aria-label="Aerial view of the Sonoran landscape" />
+        <div className="absolute inset-0 bg-hero-aerial bg-cover bg-center" role="img" aria-label="Desert landscape hero photograph" />
         <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-900/55 to-slate-900/20" aria-hidden="true" />
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(153,0,0,.25),transparent_40%),radial-gradient(circle_at_80%_100%,rgba(217,119,6,.22),transparent_40%)]" />
 

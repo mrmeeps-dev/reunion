@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        'hero-aerial': "url('/saguaro_img_homepage-aerial.jpg')",
+        'hero-aerial': "url('/photos/dulcey-lima-hr1smkEtjzI-unsplash.jpg')",
       },
       fontFamily: {
         sans: [
