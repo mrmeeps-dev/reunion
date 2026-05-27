@@ -175,7 +175,7 @@ export function HotelsSection() {
   const scrollToLocationCard = useCallback((locationId: string) => {
     document.getElementById(`location-card-${locationId}`)?.scrollIntoView({
       behavior: 'smooth',
-      block: 'nearest',
+      block: 'center',
     });
   }, []);
 
@@ -211,7 +211,7 @@ export function HotelsSection() {
       </p>
 
       {/* Mobile: map, then a normal vertical list (no horizontal carousel) */}
-      <div className="space-y-5 lg:hidden">
+      <div className="space-y-5 overflow-visible lg:hidden">
         <FilterToggleGroup filter={filter} onFilterChange={handleFilterChange} idPrefix="mobile-filter" />
         <p className="text-base text-stone-700" aria-live="polite">
           {locations.length} location{locations.length === 1 ? '' : 's'} shown. Tap a card or map pin to highlight it.
@@ -232,18 +232,20 @@ export function HotelsSection() {
         {locations.length === 0 ? (
           <p className="text-base text-stone-700">No locations match this filter.</p>
         ) : (
-          <ul className="space-y-4" aria-label="Hotels and reunion venues">
+          <ul className="space-y-4 overflow-visible py-1" aria-label="Hotels and reunion venues">
             {locations.map((location) => {
               const isActive = location.id === activeLocation?.id;
 
               return (
-                <li key={location.id}>
+                <li key={location.id} className="overflow-visible">
                   <button
                     type="button"
                     id={`location-card-${location.id}`}
                     onClick={() => selectLocation(location.id)}
-                    className={`panel w-full p-5 text-left transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-900 ${
-                      isActive ? 'border-2 border-brand ring-2 ring-brand/20' : 'border-2 border-stone-200'
+                    className={`panel w-full scroll-mt-28 p-5 text-left transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-900 ${
+                      isActive
+                        ? 'border-2 border-brand bg-rose-50/40 shadow-[inset_0_0_0_1px_rgb(190_18_60/0.35)]'
+                        : 'border-2 border-stone-200'
                     }`}
                     aria-pressed={isActive}
                   >

@@ -225,7 +225,9 @@ export default async function Home() {
               <h2 id="travel-heading" className="section-heading">Travel &amp; Accommodations</h2>
             </div>
 
-            <HotelsSection />
+            <div className="overflow-visible">
+              <HotelsSection />
+            </div>
           </div>
         </section>
 
