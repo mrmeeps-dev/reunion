@@ -51,7 +51,7 @@ function LocationDetailCard({
   className?: string;
 }) {
   return (
-    <article className={`flex h-full flex-col ${className}`}>
+    <article className={`flex flex-col ${className}`}>
       {location.badge ? (
         <p className="text-base font-semibold uppercase tracking-wide text-amber-800">{location.badge}</p>
       ) : (
@@ -267,7 +267,7 @@ export function HotelsSection() {
           </p>
         </div>
 
-        <div className="relative mt-3 h-[60vh] min-h-[16rem] overflow-hidden rounded-2xl border-2 border-stone-300 bg-stone-100 shadow-ambient">
+        <div className="relative mt-3 h-[min(52dvh,22rem)] min-h-[14rem] overflow-hidden rounded-2xl border-2 border-stone-300 bg-stone-100 shadow-ambient">
           <HotelsMap
             hotels={mapHotels}
             venues={mapVenues}
@@ -279,11 +279,11 @@ export function HotelsSection() {
           <MapLegend />
         </div>
 
-        <div className="mt-0 flex h-[40vh] min-h-[14rem] flex-col border-2 border-t-0 border-stone-300 bg-stone-50">
-          <p className="shrink-0 px-4 py-3 text-base font-semibold text-stone-900">Swipe for full details</p>
+        <div className="mt-0 border-2 border-t-0 border-stone-300 bg-stone-50">
+          <p className="px-4 py-3 text-base font-semibold text-stone-900">Swipe for full details</p>
           <div
             ref={carouselRef}
-            className="flex min-h-0 flex-1 snap-x snap-mandatory gap-4 overflow-x-auto overflow-y-hidden scroll-smooth px-4 pb-4"
+            className="flex snap-x snap-mandatory items-start gap-4 overflow-x-auto scroll-smooth px-4 pb-5 [-webkit-overflow-scrolling:touch]"
             aria-label="Location details carousel"
           >
             {locations.length === 0 ? (
