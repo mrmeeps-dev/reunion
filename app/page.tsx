@@ -3,6 +3,7 @@ import { ProtectedEmailLink } from '@/components/protected-email-link';
 import { ProtectedPhoneLink } from '@/components/protected-phone-link';
 import { AttendeeBadges } from '@/components/attendee-badges';
 import { MemoriesGallery } from '@/components/memories-gallery';
+import { HotelsSection } from '@/components/hotels-section';
 import Image from 'next/image';
 
 const ATTENDEES_CSV_URL =
@@ -155,46 +156,62 @@ export default async function Home() {
               <p className="section-subheading">Two relaxed events, one memorable weekend.</p>
             </div>
 
-            <div className="grid gap-8 lg:grid-cols-2 lg:gap-10">
-              <article className="panel space-y-5 p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl md:space-y-6 md:p-10">
-                <p className="text-sm font-medium uppercase tracking-wide text-stone-500">Friday, Oct 9</p>
-                <h3 className="text-2xl font-extrabold leading-tight tracking-tight text-stone-900 md:text-[1.65rem] lg:text-3xl">The Big Event</h3>
-                <p className="text-lg leading-relaxed text-stone-700 md:text-xl">Ticketed dinner at the Savoy Opera House in Trail Dust Town.</p>
-                <p className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-base font-semibold leading-relaxed text-stone-800 md:text-lg">
-                  Price is $76 and must be paid by September 22nd.
-                </p>
-                <a
-                  href="https://www.google.com/maps/search/?api=1&query=6541+E+Tanque+Verde+Rd+%2313%2C+Tucson%2C+AZ+85715"
-                  className="modern-link mt-1 block w-fit text-base leading-snug md:text-lg"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  6541 E Tanque Verde Rd #13, Tucson, AZ 85715
-                </a>
-                <div className="rounded-2xl border border-stone-200 bg-gradient-to-br from-stone-50 to-stone-100 p-5">
-                  <p className="text-sm text-stone-600">7:00 PM • Dinner, stories, and slideshow highlights</p>
-                  <a href="https://www.google.com/maps/search/?api=1&query=6541+E+Tanque+Verde+Rd+%2313%2C+Tucson%2C+AZ+85715" className="mt-3 inline-flex rounded-full border border-stone-300 px-4 py-2 text-sm font-semibold text-stone-800 transition-colors duration-200 hover:bg-white" target="_blank" rel="noopener noreferrer">Open directions</a>
+            <div className="grid gap-8 lg:grid-cols-2 lg:items-stretch lg:gap-10">
+              <article className="panel flex flex-col p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl md:p-10">
+                <div className="space-y-3">
+                  <p className="text-sm font-medium uppercase tracking-wide text-stone-500">Friday, Oct 9</p>
+                  <h3 className="text-2xl font-extrabold leading-tight tracking-tight text-stone-900 md:text-[1.65rem] lg:text-3xl">The Big Event</h3>
+                  <p className="text-lg leading-relaxed text-stone-700 md:text-xl">Ticketed dinner at the Savoy Opera House in Trail Dust Town.</p>
+                </div>
+
+                <div className="mt-5 space-y-3 md:mt-6">
+                  <p className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-base font-semibold leading-relaxed text-stone-800 md:text-lg">
+                    Price is $76 and must be paid by September 22nd.
+                  </p>
+                  <a
+                    href="https://www.google.com/maps/search/?api=1&query=6541+E+Tanque+Verde+Rd+%2313%2C+Tucson%2C+AZ+85715"
+                    className="modern-link block w-fit text-base leading-snug md:text-lg"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    6541 E Tanque Verde Rd #13, Tucson, AZ 85715
+                  </a>
+                </div>
+
+                <div className="mt-auto pt-5 md:pt-6">
+                  <div className="space-y-3 rounded-2xl border border-stone-200 bg-gradient-to-br from-stone-50 to-stone-100 p-5">
+                    <p className="min-h-12 text-sm leading-relaxed text-stone-600">7:00 PM • Dinner, stories, and slideshow highlights</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=6541+E+Tanque+Verde+Rd+%2313%2C+Tucson%2C+AZ+85715" className="inline-flex rounded-full border border-stone-300 px-4 py-2 text-sm font-semibold text-stone-800 transition-colors duration-200 hover:bg-white" target="_blank" rel="noopener noreferrer">Open directions</a>
+                  </div>
                 </div>
               </article>
 
-              <article className="panel space-y-5 p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl md:space-y-6 md:p-10">
-                <p className="text-sm font-medium uppercase tracking-wide text-stone-500">Saturday, Oct 10</p>
-                <h3 className="text-2xl font-extrabold leading-tight tracking-tight text-stone-900 md:text-[1.65rem] lg:text-3xl">Casual Meetup</h3>
-                <p className="text-lg leading-relaxed text-stone-700 md:text-xl">&ldquo;No-host&rdquo; event at Three Canyon Beer and Wine Garden.</p>
-                <p className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-base font-semibold leading-relaxed text-emerald-900 md:text-lg">
-                  Free! Drinks and food available for purchase.
-                </p>
-                <a
-                  href="https://www.google.com/maps/search/?api=1&query=4999+N+Sabino+Canyon+Rd%2C+Tucson%2C+AZ+85750"
-                  className="modern-link mt-1 block w-fit text-base leading-snug md:text-lg"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  4999 N Sabino Canyon Rd, Tucson, AZ 85750
-                </a>
-                <div className="rounded-2xl border border-stone-200 bg-gradient-to-br from-stone-50 to-stone-100 p-5">
-                  <p className="text-sm text-stone-600">4pm-9pm • Drop in, mingle, and catch up at your own pace</p>
-                  <a href="https://www.google.com/maps/search/?api=1&query=4999+N+Sabino+Canyon+Rd%2C+Tucson%2C+AZ+85750" className="mt-3 inline-flex rounded-full border border-stone-300 px-4 py-2 text-sm font-semibold text-stone-800 transition-colors duration-200 hover:bg-white" target="_blank" rel="noopener noreferrer">Open directions</a>
+              <article className="panel flex flex-col p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl md:p-10">
+                <div className="space-y-3">
+                  <p className="text-sm font-medium uppercase tracking-wide text-stone-500">Saturday, Oct 10</p>
+                  <h3 className="text-2xl font-extrabold leading-tight tracking-tight text-stone-900 md:text-[1.65rem] lg:text-3xl">Casual Meetup</h3>
+                  <p className="text-lg leading-relaxed text-stone-700 md:text-xl">&ldquo;No-host&rdquo; event at Three Canyon Beer and Wine Garden.</p>
+                </div>
+
+                <div className="mt-5 space-y-3 md:mt-6">
+                  <p className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-base font-semibold leading-relaxed text-emerald-900 md:text-lg">
+                    Free! Drinks and food available for purchase.
+                  </p>
+                  <a
+                    href="https://www.google.com/maps/search/?api=1&query=4999+N+Sabino+Canyon+Rd%2C+Tucson%2C+AZ+85750"
+                    className="modern-link block w-fit text-base leading-snug md:text-lg"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    4999 N Sabino Canyon Rd, Tucson, AZ 85750
+                  </a>
+                </div>
+
+                <div className="mt-auto pt-5 md:pt-6">
+                  <div className="space-y-3 rounded-2xl border border-stone-200 bg-gradient-to-br from-stone-50 to-stone-100 p-5">
+                    <p className="min-h-12 text-sm leading-relaxed text-stone-600">4pm-9pm • Drop in, mingle, and catch up at your own pace</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=4999+N+Sabino+Canyon+Rd%2C+Tucson%2C+AZ+85750" className="inline-flex rounded-full border border-stone-300 px-4 py-2 text-sm font-semibold text-stone-800 transition-colors duration-200 hover:bg-white" target="_blank" rel="noopener noreferrer">Open directions</a>
+                  </div>
                 </div>
               </article>
             </div>
@@ -208,30 +225,7 @@ export default async function Home() {
               <h2 id="travel-heading" className="section-heading">Travel &amp; Accommodations</h2>
             </div>
 
-            <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-2">
-              <article className="panel p-8 md:p-10">
-              <h3 className="text-2xl font-extrabold leading-tight tracking-tight text-stone-900 md:text-3xl">Where to stay</h3>
-              <p className="mt-5 text-lg leading-relaxed text-stone-700 md:mt-6 md:text-xl">
-                We suggest{' '}
-                <a
-                  href="https://www.hilton.com/en/hotels/tuseees-embassy-suites-tucson-east/?SEO_id=GMB-AMER-ES-TUSEEES&y_source=1_MTUwNjEwMTgtNzE1LWxvY2F0aW9uLndlYnNpdGU%3D"
-                  className="modern-link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Embassy Suites by Hilton Tucson East
-                </a>{' '}
-                for visiting classmates. Book early for better room options and rates.
-              </p>
-                <div className="mt-6 flex flex-wrap gap-3">
-                  <a href="https://www.hilton.com/en/hotels/tuseees-embassy-suites-tucson-east/?SEO_id=GMB-AMER-ES-TUSEEES&y_source=1_MTUwNjEwMTgtNzE1LWxvY2F0aW9uLndlYnNpdGU%3D" className="inline-flex rounded-full border border-stone-300 px-4 py-2 text-sm font-semibold text-stone-800 transition-colors duration-200 hover:bg-stone-100" target="_blank" rel="noopener noreferrer">View hotel</a>
-                  <a href="https://www.google.com/maps/search/?api=1&query=Embassy+Suites+by+Hilton+Tucson+East,+6555+E+Speedway+Blvd,+Tucson,+AZ+85710" className="inline-flex rounded-full border border-stone-300 px-4 py-2 text-sm font-semibold text-stone-800 transition-colors duration-200 hover:bg-stone-100" target="_blank" rel="noopener noreferrer">Open directions</a>
-                </div>
-              </article>
-              <div className="overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-inner shadow-stone-100/70">
-                <img src="/pool.avif" alt="Embassy Suites pool area" className="h-64 w-full object-cover md:h-full md:min-h-[18rem]" />
-              </div>
-            </div>
+            <HotelsSection />
           </div>
         </section>
 
