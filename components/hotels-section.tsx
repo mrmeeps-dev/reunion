@@ -76,7 +76,7 @@ function LocationDetailCard({
         </p>
       ) : null}
       {location.notes ? <p className="mt-2 text-base leading-relaxed text-stone-800">{location.notes}</p> : null}
-      <div className="mt-auto flex flex-wrap gap-3 pt-4">
+      <div className="mt-4 flex flex-wrap gap-3">
         {location.kind === 'hotel' ? (
           <a href={location.websiteUrl} className={actionLinkClassName} target="_blank" rel="noopener noreferrer">
             View hotel website
@@ -131,9 +131,6 @@ export function HotelsSection() {
   const [filter, setFilter] = useState<LocationFilter>('All');
   const [activeLocationId, setActiveLocationId] = useState('');
   const [enableMapPan, setEnableMapPan] = useState(false);
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const skipScrollSyncRef = useRef(false);
-  const scrollSyncTimerRef = useRef<number | null>(null);
   const panDebounceRef = useRef<number | null>(null);
 
   const locations = useMemo(() => buildTravelLocations(filter), [filter]);
@@ -166,24 +163,6 @@ export function HotelsSection() {
     }
   }, [activeLocationId, locations]);
 
-  const scrollCarouselToLocation = useCallback((locationId: string) => {
-    const carousel = carouselRef.current;
-    if (!carousel) return;
-
-    const card = carousel.querySelector<HTMLElement>(`[data-location-id="${locationId}"]`);
-    if (!card) return;
-
-    skipScrollSyncRef.current = true;
-    card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-
-    if (scrollSyncTimerRef.current !== null) {
-      window.clearTimeout(scrollSyncTimerRef.current);
-    }
-    scrollSyncTimerRef.current = window.setTimeout(() => {
-      skipScrollSyncRef.current = false;
-    }, 450);
-  }, []);
-
   const requestMapPan = useCallback(() => {
     if (panDebounceRef.current !== null) {
       window.clearTimeout(panDebounceRef.current);
@@ -193,15 +172,22 @@ export function HotelsSection() {
     }, 150);
   }, []);
 
+  const scrollToLocationCard = useCallback((locationId: string) => {
+    document.getElementById(`location-card-${locationId}`)?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+    });
+  }, []);
+
   const selectLocation = useCallback(
-    (locationId: string, options?: { scrollCarousel?: boolean }) => {
+    (locationId: string, options?: { scrollToCard?: boolean }) => {
       setActiveLocationId(locationId);
       requestMapPan();
-      if (options?.scrollCarousel) {
-        scrollCarouselToLocation(locationId);
+      if (options?.scrollToCard) {
+        scrollToLocationCard(locationId);
       }
     },
-    [requestMapPan, scrollCarouselToLocation],
+    [requestMapPan, scrollToLocationCard],
   );
 
   const handleFilterChange = (next: LocationFilter) => {
@@ -210,41 +196,7 @@ export function HotelsSection() {
   };
 
   useEffect(() => {
-    const carousel = carouselRef.current;
-    if (!carousel || locations.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (skipScrollSyncRef.current) return;
-
-        const mostVisible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-        if (!mostVisible?.target) return;
-        const locationId = mostVisible.target.getAttribute('data-location-id');
-        if (locationId) {
-          setActiveLocationId(locationId);
-          requestMapPan();
-        }
-      },
-      {
-        root: carousel,
-        threshold: [0.55, 0.7, 0.85],
-      },
-    );
-
-    const cards = carousel.querySelectorAll<HTMLElement>('[data-location-id]');
-    cards.forEach((card) => observer.observe(card));
-
-    return () => observer.disconnect();
-  }, [locations, requestMapPan]);
-
-  useEffect(() => {
     return () => {
-      if (scrollSyncTimerRef.current !== null) {
-        window.clearTimeout(scrollSyncTimerRef.current);
-      }
       if (panDebounceRef.current !== null) {
         window.clearTimeout(panDebounceRef.current);
       }
@@ -258,52 +210,50 @@ export function HotelsSection() {
         location to see full details.
       </p>
 
-      {/* Mobile: map + horizontal carousel (no stacked list) */}
-      <div className="flex flex-col lg:hidden">
-        <div className="shrink-0 space-y-3">
-          <FilterToggleGroup filter={filter} onFilterChange={handleFilterChange} idPrefix="mobile-filter" />
-          <p className="text-base text-stone-700" aria-live="polite">
-            {locations.length} location{locations.length === 1 ? '' : 's'} shown. Swipe the cards below to browse.
-          </p>
-        </div>
+      {/* Mobile: map, then a normal vertical list (no horizontal carousel) */}
+      <div className="space-y-5 lg:hidden">
+        <FilterToggleGroup filter={filter} onFilterChange={handleFilterChange} idPrefix="mobile-filter" />
+        <p className="text-base text-stone-700" aria-live="polite">
+          {locations.length} location{locations.length === 1 ? '' : 's'} shown. Tap a card or map pin to highlight it.
+        </p>
 
-        <div className="relative mt-3 h-[min(52dvh,22rem)] min-h-[14rem] overflow-hidden rounded-2xl border-2 border-stone-300 bg-stone-100 shadow-ambient">
+        <div className="relative h-64 overflow-hidden rounded-2xl border-2 border-stone-300 bg-stone-100 shadow-ambient">
           <HotelsMap
             hotels={mapHotels}
             venues={mapVenues}
             activeLocationId={activeLocation?.id ?? ''}
             {...mapPanProps}
-            onLocationSelect={(id) => selectLocation(id, { scrollCarousel: true })}
+            onLocationSelect={(id) => selectLocation(id, { scrollToCard: true })}
             fitBoundsKey={fitBoundsKey}
           />
           <MapLegend />
         </div>
 
-        <div className="mt-0 border-2 border-t-0 border-stone-300 bg-stone-50">
-          <p className="px-4 py-3 text-base font-semibold text-stone-900">Swipe for full details</p>
-          <div
-            ref={carouselRef}
-            className="flex snap-x snap-mandatory items-start gap-4 overflow-x-auto scroll-smooth px-4 pb-5 [-webkit-overflow-scrolling:touch]"
-            aria-label="Location details carousel"
-          >
-            {locations.length === 0 ? (
-              <p className="px-2 py-6 text-base text-stone-700">No locations match this filter.</p>
-            ) : (
-              locations.map((location) => (
-                <article
-                  key={location.id}
-                  data-location-id={location.id}
-                  className={`panel w-[88vw] max-w-md shrink-0 snap-center snap-always scroll-ml-4 p-5 first:scroll-ml-0 ${
-                    location.id === activeLocation?.id ? 'border-brand ring-2 ring-brand/20' : ''
-                  }`}
-                  aria-current={location.id === activeLocation?.id ? 'true' : undefined}
-                >
-                  <LocationDetailCard location={location} />
-                </article>
-              ))
-            )}
-          </div>
-        </div>
+        {locations.length === 0 ? (
+          <p className="text-base text-stone-700">No locations match this filter.</p>
+        ) : (
+          <ul className="space-y-4" aria-label="Hotels and reunion venues">
+            {locations.map((location) => {
+              const isActive = location.id === activeLocation?.id;
+
+              return (
+                <li key={location.id}>
+                  <button
+                    type="button"
+                    id={`location-card-${location.id}`}
+                    onClick={() => selectLocation(location.id)}
+                    className={`panel w-full p-5 text-left transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-900 ${
+                      isActive ? 'border-2 border-brand ring-2 ring-brand/20' : 'border-2 border-stone-200'
+                    }`}
+                    aria-pressed={isActive}
+                  >
+                    <LocationDetailCard location={location} />
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        )}
       </div>
 
       {/* Desktop: master/detail */}

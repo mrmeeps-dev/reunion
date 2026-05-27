@@ -218,7 +218,7 @@ export default async function Home() {
           </div>
         </section>
 
-        <section id="hotels" className="reveal section-shell scroll-mt-24 bg-white md:scroll-mt-28" aria-labelledby="travel-heading" data-reveal>
+        <section id="hotels" className="reveal section-shell scroll-mt-24 overflow-visible bg-white md:scroll-mt-28" aria-labelledby="travel-heading" data-reveal>
           <div className="section-frame">
             <div className="text-center">
               <p className="section-kicker">Plan Your Trip</p>
