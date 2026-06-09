@@ -36,7 +36,8 @@ async function getAttendees(): Promise<string[]> {
     const names = rows
       .map((row) => normalizeName(row[0] ?? ''))
       .filter(Boolean)
-      .filter((name) => !/^name$/i.test(name));
+      .filter((name) => !/^name$/i.test(name))
+      .filter((name) => name !== '#N/A');
 
     const seen = new Set<string>();
     const uniqueNames: string[] = [];
