@@ -11,6 +11,25 @@ npm run dev
 
 Open `http://localhost:3000`.
 
+The first `npm run dev` (and every `npm run build`) runs `photos:build` automatically to generate optimized gallery images from `photos-source/`.
+
+## Memory photos
+
+Gallery originals live in [`photos-source/`](photos-source/) (committed). Build output goes to `public/photos/thumbs/` and `public/photos/display/` (gitignored, regenerated on each build).
+
+**Adding a reunion photo:**
+
+1. Drop the file into `photos-source/` (`.jpeg`, `.jpg`, or `.png`).
+2. Add an entry to [`data/memory-photos.ts`](data/memory-photos.ts) with `id` (filename without extension), `alt`, and `caption`.
+3. Run `npm run dev` or `npm run build` to regenerate web variants.
+4. Commit the source file and metadata only — not the generated thumbs/display folders.
+
+To rebuild photos manually:
+
+```bash
+npm run photos:build
+```
+
 ## Production build/export
 
 ```bash
@@ -46,7 +65,7 @@ The site is static files in `out/` after `next build`.
 
 4. Use **Node.js** version **20** or newer (Pages → Settings → Environment variables → add `NODE_VERSION` = `20` if needed).
 
-5. Deploy. Your site will be served from `out/`. The `public/_headers` file is copied into the export and applies cache hints for `/_next/static/*`.
+5. Deploy. Your site will be served from `out/`. The `public/_headers` file is copied into the export and applies cache hints for `/_next/static/*` and optimized gallery photos under `/photos/thumbs/*` and `/photos/display/*`.
 
 ### Custom domain
 

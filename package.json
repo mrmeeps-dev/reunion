@@ -10,6 +10,9 @@
   },
   "scripts": {
     "dev": "next dev",
+    "photos:build": "node scripts/build-photos.mjs",
+    "prebuild": "npm run photos:build",
+    "predev": "npm run photos:build",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
@@ -27,6 +30,7 @@
     "eslint-config-next": "^16.2.4",
     "postcss": "^8.5.10",
     "prettier": "^3.4.2",
+    "sharp": "^0.34.5",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.7.3",
     "wrangler": "^4.85.0"

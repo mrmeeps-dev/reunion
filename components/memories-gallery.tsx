@@ -2,12 +2,14 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-
-type MemorySlide = {
-  src: string;
-  alt: string;
-  caption: string;
-};
+import {
+  memoryPhotos,
+  photoDisplayJpegSrc,
+  photoDisplayWebpSrc,
+  photoThumbJpegSrc,
+  photoThumbWebpSrc,
+  type MemoryPhoto,
+} from '@/data/memory-photos';
 
 const AUTOPLAY_MS = 5000;
 
@@ -36,14 +38,47 @@ function lockBodyScroll() {
   };
 }
 
+function MemoryImage({
+  photo,
+  variant,
+  className,
+  lazy = false,
+}: {
+  photo: MemoryPhoto;
+  variant: 'thumb' | 'display';
+  className?: string;
+  lazy?: boolean;
+}) {
+  const webpSrc = variant === 'thumb' ? photoThumbWebpSrc(photo.id) : photoDisplayWebpSrc(photo.id);
+  const jpegSrc = variant === 'thumb' ? photoThumbJpegSrc(photo.id) : photoDisplayJpegSrc(photo.id);
+
+  const imgClassName =
+    variant === 'display'
+      ? 'max-h-[min(72vh,40rem)] w-full object-contain'
+      : 'h-full w-full object-contain object-center';
+
+  return (
+    <picture className={className ? `block ${className}` : 'block h-full w-full'}>
+      <source srcSet={webpSrc} type="image/webp" />
+      <img
+        src={jpegSrc}
+        alt={photo.alt}
+        className={imgClassName}
+        loading={lazy ? 'lazy' : undefined}
+        decoding="async"
+      />
+    </picture>
+  );
+}
+
 function MemoryPhotoCard({
-  slide,
+  photo,
   slideIndex,
   onSelect,
   lazy = false,
   isCenter = false,
 }: {
-  slide: MemorySlide;
+  photo: MemoryPhoto;
   slideIndex: number;
   onSelect: (slideIndex: number) => void;
   lazy?: boolean;
@@ -56,36 +91,36 @@ function MemoryPhotoCard({
       className={`group overflow-hidden rounded-xl border bg-white text-left shadow-sm transition-colors duration-200 hover:border-stone-300 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-500 ${
         isCenter ? 'border-brand ring-2 ring-brand/20' : 'border-stone-200'
       }`}
-      aria-label={`View memory photo: ${slide.caption}`}
+      aria-label={`View memory photo: ${photo.caption}`}
       aria-current={isCenter ? 'true' : undefined}
     >
       <div className="flex aspect-[4/3] w-full items-center justify-center bg-stone-100">
-        <img
-          src={slide.src}
-          alt={slide.alt}
+        <MemoryImage
+          photo={photo}
+          variant="thumb"
           className="h-full w-full object-contain object-center"
-          loading={lazy ? 'lazy' : undefined}
+          lazy={lazy}
         />
       </div>
-      <p className="px-3 py-2 text-sm font-semibold leading-snug text-stone-800">{slide.caption}</p>
+      <p className="px-3 py-2 text-sm font-semibold leading-snug text-stone-800">{photo.caption}</p>
     </button>
   );
 }
 
 function MemoryLightbox({
-  slides,
+  photos,
   index,
   onClose,
   onPrev,
   onNext,
 }: {
-  slides: MemorySlide[];
+  photos: MemoryPhoto[];
   index: number;
   onClose: () => void;
   onPrev: () => void;
   onNext: () => void;
 }) {
-  const slide = slides[index];
+  const photo = photos[index];
   const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);
   const onCloseRef = useRef(onClose);
   const onPrevRef = useRef(onPrev);
@@ -118,6 +153,24 @@ function MemoryLightbox({
     };
   }, [portalRoot]);
 
+  useEffect(() => {
+    const preload = (targetIndex: number) => {
+      const target = photos[targetIndex];
+      if (!target) return;
+
+      for (const src of [photoDisplayWebpSrc(target.id), photoDisplayJpegSrc(target.id)]) {
+        const link = document.createElement('link');
+        link.rel = 'prefetch';
+        link.as = 'image';
+        link.href = src;
+        document.head.appendChild(link);
+      }
+    };
+
+    preload((index + 1) % photos.length);
+    preload((index - 1 + photos.length) % photos.length);
+  }, [index, photos]);
+
   if (!portalRoot) return null;
 
   return createPortal(
@@ -125,7 +178,7 @@ function MemoryLightbox({
       className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6"
       role="dialog"
       aria-modal="true"
-      aria-label={`Photo ${index + 1} of ${slides.length}: ${slide.caption}`}
+      aria-label={`Photo ${index + 1} of ${photos.length}: ${photo.caption}`}
     >
       <button
         type="button"
@@ -145,18 +198,14 @@ function MemoryLightbox({
         </button>
 
         <div className="flex max-h-[min(72vh,40rem)] w-full items-center justify-center rounded-xl bg-stone-950/50">
-          <img
-            src={slide.src}
-            alt={slide.alt}
-            className="max-h-[min(72vh,40rem)] w-full object-contain"
-          />
+          <MemoryImage photo={photo} variant="display" />
         </div>
 
         <div className="mt-4 px-1 text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-stone-300">
-            Photo {index + 1} of {slides.length}
+            Photo {index + 1} of {photos.length}
           </p>
-          <p className="mt-1 text-base font-semibold text-white sm:text-lg">{slide.caption}</p>
+          <p className="mt-1 text-base font-semibold text-white sm:text-lg">{photo.caption}</p>
         </div>
 
         <button
@@ -182,141 +231,7 @@ function MemoryLightbox({
 }
 
 export function MemoriesGallery() {
-  const slides = useMemo<MemorySlide[]>(
-    () => [
-      {
-        src: '/photos/IMG_7633.jpeg',
-        alt: 'Heidi Scanlon and Jeff Sherrer',
-        caption: 'Heidi Scanlon & Jeff Sherrer',
-      },
-      {
-        src: '/photos/IMG_4984.jpeg',
-        alt: 'Spencer Lower',
-        caption: 'Spencer Lower',
-      },
-      {
-        src: '/photos/IMG_7636.jpeg',
-        alt: "Girls' party reunion photo",
-        caption: "Girls' Party",
-      },
-      {
-        src: '/photos/IMG_7635.jpeg',
-        alt: 'Graduation rehearsal',
-        caption: 'Graduation Rehearsal',
-      },
-      {
-        src: '/photos/IMG_7637.jpeg',
-        alt: 'Sahuaro Singers',
-        caption: 'Sahuaro Singers',
-      },
-      {
-        src: '/photos/image.png',
-        alt: 'Carolyn Lochert and Elaine Myles',
-        caption: 'Carolyn Lochert & Elaine Myles',
-      },
-      {
-        src: '/photos/IMG_7632.jpeg',
-        alt: 'Scott Sanders, Lee Ann Markle, Linda Schloss with Student Council Advisor',
-        caption: 'Scott Sanders, Lee Ann Markle, Linda Schloss (Student Council Advisor)',
-      },
-      {
-        src: '/photos/IMG_3953.jpeg',
-        alt: 'Rodeo Queen and King',
-        caption: 'Rodeo Queen and King',
-      },
-      {
-        src: '/photos/IMG_0193.jpeg',
-        alt: 'Newspaper Staff',
-        caption: 'Newspaper Staff',
-      },
-      {
-        src: '/photos/IMG_0194.jpeg',
-        alt: 'Billy Lopez',
-        caption: 'Billy Lopez',
-      },
-      {
-        src: '/photos/IMG_0195.jpeg',
-        alt: 'Eleanor "Casey" Extract',
-        caption: 'Eleanor "Casey" Extract',
-      },
-      {
-        src: '/photos/IMG_0196.jpeg',
-        alt: 'Dick McConnell',
-        caption: 'Dick McConnell',
-      },
-      {
-        src: '/photos/IMG_0197.jpeg',
-        alt: 'Henry "Hank" Egbert',
-        caption: 'Henry "Hank" Egbert',
-      },
-      {
-        src: '/photos/IMG_0199.jpeg',
-        alt: 'Jane Joens and Alan Simon',
-        caption: 'Jane Joens & Alan Simon',
-      },
-      {
-        src: '/photos/IMG_0201.jpeg',
-        alt: 'Mark Gonzales (right)',
-        caption: 'Mark Gonzales (right)',
-      },
-      {
-        src: '/photos/IMG_0202.jpeg',
-        alt: 'Mary Beth Neeley',
-        caption: 'Mary Beth Neeley',
-      },
-      {
-        src: '/photos/IMG_0183.jpeg',
-        alt: 'Sahuaro Singers',
-        caption: 'Sahuaro Singers',
-      },
-      {
-        src: '/photos/IMG_0184.jpeg',
-        alt: 'Richard Byrd',
-        caption: 'Richard Byrd',
-      },
-      {
-        src: '/photos/IMG_0186.jpeg',
-        alt: 'Michael Bersin and Craig Ledbetter',
-        caption: 'Michael Bersin & Craig Ledbetter',
-      },
-      {
-        src: '/photos/IMG_0188.jpeg',
-        alt: 'Sahuaro Singers',
-        caption: 'Sahuaro Singers',
-      },
-      {
-        src: '/photos/IMG_0189.jpeg',
-        alt: 'Tony Poe',
-        caption: 'Tony Poe',
-      },
-      {
-        src: '/photos/IMG_0190.jpeg',
-        alt: 'Tom W, Tony P, Dave J, Kenny O, Mike D, Scott S',
-        caption: 'Tom W, Tony P, Dave J, Kenny O, Mike D, Scott S',
-      },
-      {
-        src: '/photos/IMG_0191.jpeg',
-        alt: 'Band Officers',
-        caption: 'Band Officers',
-      },
-      {
-        src: '/photos/IMG_0192.jpeg',
-        alt: "Lisa D'Antimo and Sonya Evans",
-        caption: "Lisa D'Antimo & Sonya Evans",
-      },
-      {
-        src: '/photos/7464.jpeg',
-        alt: 'Bob Springs, Senior Show',
-        caption: 'Bob Springs, Senior Show',
-      },
-      {
-        src: '/photos/7250174783735735219.jpeg',
-        alt: 'Lunchroom: Ed Gwozdz, Lee Ann Markle, Tom Larson, Mary Bet Jacobs, Marci Morrison',
-        caption: 'Lunchroom: Ed Gwozdz, Lee Ann Markle, Tom Larson, Mary Bet Jacobs, Marci Morrison',
-      },
-    ],
-    [],
-  );
+  const photos = memoryPhotos;
 
   const [index, setIndex] = useState(0);
   const [lightboxIndex, setLightboxIndex] = useState(0);
@@ -334,31 +249,31 @@ export function MemoriesGallery() {
 
   const goTo = (nextIndex: number) => {
     stopAutoplay();
-    const safe = (nextIndex + slides.length) % slides.length;
+    const safe = (nextIndex + photos.length) % photos.length;
     setIndex(safe);
   };
 
   const goNext = useCallback(() => {
     stopAutoplay();
-    setIndex((prev) => (prev + 1) % slides.length);
-  }, [slides.length, stopAutoplay]);
+    setIndex((prev) => (prev + 1) % photos.length);
+  }, [photos.length, stopAutoplay]);
 
   const goPrev = useCallback(() => {
     stopAutoplay();
-    setIndex((prev) => (prev - 1 + slides.length) % slides.length);
-  }, [slides.length, stopAutoplay]);
+    setIndex((prev) => (prev - 1 + photos.length) % photos.length);
+  }, [photos.length, stopAutoplay]);
 
   const lightboxGoNext = useCallback(() => {
-    setLightboxIndex((prev) => (prev + 1) % slides.length);
-  }, [slides.length]);
+    setLightboxIndex((prev) => (prev + 1) % photos.length);
+  }, [photos.length]);
 
   const lightboxGoPrev = useCallback(() => {
-    setLightboxIndex((prev) => (prev - 1 + slides.length) % slides.length);
-  }, [slides.length]);
+    setLightboxIndex((prev) => (prev - 1 + photos.length) % photos.length);
+  }, [photos.length]);
 
   const openLightbox = (slideIndex: number) => {
     stopAutoplay();
-    const safe = (slideIndex + slides.length) % slides.length;
+    const safe = (slideIndex + photos.length) % photos.length;
     setLightboxIndex(safe);
     setIsLightboxOpen(true);
   };
@@ -378,38 +293,44 @@ export function MemoriesGallery() {
 
     const id = window.setInterval(() => {
       if (autoplayBlockedRef.current) return;
-      setIndex((prev) => (prev + 1) % slides.length);
+      setIndex((prev) => (prev + 1) % photos.length);
     }, AUTOPLAY_MS);
 
     return () => window.clearInterval(id);
-  }, [hasUserInteracted, isExpanded, isLightboxOpen, slides.length]);
+  }, [hasUserInteracted, isExpanded, isLightboxOpen, photos.length]);
 
-  const activeSlide = slides[index];
-  const desktopVisibleSlides = useMemo(() => {
-    if (slides.length <= 2) {
-      return slides.map((slide, slideIndex) => ({ slide, slideIndex }));
+  const activePhoto = photos[index];
+  const desktopVisiblePhotos = useMemo(() => {
+    if (photos.length <= 2) {
+      return photos.map((photo, slideIndex) => ({ photo, slideIndex }));
     }
 
     return [-1, 0, 1].map((offset) => {
-      const slideIndex = (index + offset + slides.length) % slides.length;
-      return { slide: slides[slideIndex], slideIndex };
+      const slideIndex = (index + offset + photos.length) % photos.length;
+      return { photo: photos[slideIndex], slideIndex };
     });
-  }, [index, slides]);
+  }, [index, photos]);
 
-  const showMobileDots = slides.length <= 10;
+  const showMobileDots = photos.length <= 10;
 
-  const gridSlides = useMemo(() => {
+  const gridPhotos = useMemo(() => {
     if (isExpanded) {
-      return slides.map((slide, slideIndex) => ({ slide, slideIndex }));
+      return photos.map((photo, slideIndex) => ({ photo, slideIndex }));
     }
 
-    return desktopVisibleSlides;
-  }, [desktopVisibleSlides, isExpanded, slides]);
+    return desktopVisiblePhotos;
+  }, [desktopVisiblePhotos, isExpanded, photos]);
 
   return (
     <div className="mx-auto mt-6 w-full max-w-3xl">
       {isLightboxOpen ? (
-        <MemoryLightbox slides={slides} index={lightboxIndex} onClose={closeLightbox} onPrev={lightboxGoPrev} onNext={lightboxGoNext} />
+        <MemoryLightbox
+          photos={photos}
+          index={lightboxIndex}
+          onClose={closeLightbox}
+          onPrev={lightboxGoPrev}
+          onNext={lightboxGoNext}
+        />
       ) : null}
 
       <div onMouseEnter={pauseAutoplay} onFocusCapture={pauseAutoplay}>
@@ -429,16 +350,20 @@ export function MemoriesGallery() {
             type="button"
             onClick={() => openLightbox(index)}
             className="flex aspect-[4/3] w-full cursor-zoom-in items-center justify-center bg-stone-100 sm:aspect-[16/10]"
-            aria-label={`Enlarge photo: ${activeSlide.caption}`}
+            aria-label={`Enlarge photo: ${activePhoto.caption}`}
           >
-            <img src={activeSlide.src} alt={activeSlide.alt} className="h-full w-full object-contain object-center" />
+            <MemoryImage
+              photo={activePhoto}
+              variant="thumb"
+              className="h-full w-full object-contain object-center"
+            />
           </button>
 
           <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent px-5 py-4 text-left">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-stone-200">
-              Photo {index + 1} of {slides.length}
+              Photo {index + 1} of {photos.length}
             </p>
-            <p className="mt-1 text-base font-semibold text-white">{activeSlide.caption}</p>
+            <p className="mt-1 text-base font-semibold text-white">{activePhoto.caption}</p>
           </div>
         </div>
 
@@ -453,13 +378,13 @@ export function MemoriesGallery() {
       </div>
       ) : (
         <div className="grid grid-cols-2 gap-3 md:hidden">
-          {gridSlides.map(({ slide, slideIndex }, position) => (
+          {gridPhotos.map(({ photo, slideIndex }, position) => (
             <MemoryPhotoCard
-              key={`${slide.src}-${slideIndex}`}
-              slide={slide}
+              key={`${photo.id}-${slideIndex}`}
+              photo={photo}
               slideIndex={slideIndex}
               onSelect={openLightbox}
-              lazy={position > 3}
+              lazy={position > 1}
             />
           ))}
         </div>
@@ -469,7 +394,7 @@ export function MemoriesGallery() {
         {!isExpanded ? (
           <div className="mb-3 flex items-center justify-between">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-stone-500">
-              Photo {index + 1} of {slides.length}
+              Photo {index + 1} of {photos.length}
             </p>
             <div className="inline-flex items-center gap-2">
               <button
@@ -492,18 +417,18 @@ export function MemoriesGallery() {
           </div>
         ) : (
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-stone-500">
-            All {slides.length} photos
+            All {photos.length} photos
           </p>
         )}
 
         <div className="grid grid-cols-3 gap-3">
-          {gridSlides.map(({ slideIndex, slide }) => (
+          {gridPhotos.map(({ slideIndex, photo }) => (
             <MemoryPhotoCard
-              key={`${slide.src}-${slideIndex}`}
-              slide={slide}
+              key={`${photo.id}-${slideIndex}`}
+              photo={photo}
               slideIndex={slideIndex}
               onSelect={openLightbox}
-              lazy={isExpanded && slideIndex > 2}
+              lazy={isExpanded ? slideIndex > 2 : slideIndex !== index}
               isCenter={!isExpanded && slideIndex === index}
             />
           ))}
@@ -512,9 +437,9 @@ export function MemoriesGallery() {
 
       {showMobileDots && !isExpanded ? (
         <div className="mt-4 flex flex-wrap items-center justify-center gap-2 md:hidden">
-          {slides.map((slide, dotIndex) => (
+          {photos.map((photo, dotIndex) => (
             <button
-              key={slide.src}
+              key={photo.id}
               type="button"
               onClick={() => goTo(dotIndex)}
               className={`h-2.5 rounded-full transition-all duration-200 ${
@@ -535,7 +460,7 @@ export function MemoriesGallery() {
           className="inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white px-6 py-3 text-base font-semibold text-stone-900 shadow-sm transition-colors duration-200 hover:bg-stone-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-500"
           aria-expanded={isExpanded}
         >
-          {isExpanded ? 'Back to slideshow' : `View all ${slides.length} photos`}
+          {isExpanded ? 'Back to slideshow' : `View all ${photos.length} photos`}
           <span className={`text-xs transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} aria-hidden="true">
             ▾
           </span>

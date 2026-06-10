@@ -38,3 +38,7 @@ npm-debug.log*
 /class logo.png
 /head-mascot.png
 /saguaro_img_homepage-aerial.jpg
+
+# Generated memory photo variants (built from photos-source/ via npm run photos:build)
+public/photos/thumbs/
+public/photos/display/
