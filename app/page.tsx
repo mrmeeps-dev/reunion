@@ -1,63 +1,12 @@
 import { ScrollEffects } from '@/components/scroll-effects';
 import { ProtectedEmailLink } from '@/components/protected-email-link';
 import { ProtectedPhoneLink } from '@/components/protected-phone-link';
-import { AttendeeBadges } from '@/components/attendee-badges';
+import { AttendeesSection } from '@/components/attendees-section';
 import { MemoriesGallery } from '@/components/memories-gallery';
 import { HotelsSection } from '@/components/hotels-section';
 import Image from 'next/image';
 
-const ATTENDEES_CSV_URL =
-  'https://docs.google.com/spreadsheets/d/e/2PACX-1vRqieH3cEMyZEf4jFNCsOOzdApH2-rtt35rziQt3IDMjf1OxZLex0fU2mGd_XrC-TWTHhAMtWvwD8r3/pub?gid=1436665659&single=true&output=csv';
-
-const csvSplitRegex = /,(?=(?:[^"]*"[^"]*")*[^"]*$)/;
-
-function parseCsvLine(line: string): string[] {
-  return line.split(csvSplitRegex).map((cell) => cell.trim().replace(/^"|"$/g, '').replace(/""/g, '"'));
-}
-
-function normalizeName(name: string): string {
-  return name.replace(/\s+/g, ' ').trim();
-}
-
-async function getAttendees(): Promise<string[]> {
-  try {
-    const response = await fetch(ATTENDEES_CSV_URL, {
-      next: { revalidate: 900 },
-    });
-    if (!response.ok) return [];
-
-    const csvText = await response.text();
-    const rows = csvText
-      .split(/\r?\n/)
-      .map((line) => line.trim())
-      .filter(Boolean)
-      .map(parseCsvLine);
-
-    const names = rows
-      .map((row) => normalizeName(row[0] ?? ''))
-      .filter(Boolean)
-      .filter((name) => !/^name$/i.test(name))
-      .filter((name) => name !== '#N/A');
-
-    const seen = new Set<string>();
-    const uniqueNames: string[] = [];
-    for (const name of names) {
-      const key = name.toLowerCase();
-      if (!seen.has(key)) {
-        seen.add(key);
-        uniqueNames.push(name);
-      }
-    }
-
-    return uniqueNames.sort((a, b) => a.localeCompare(b));
-  } catch {
-    return [];
-  }
-}
-
-export default async function Home() {
-  const attendees = await getAttendees();
-
+export default function Home() {
   return (
     <>
       <ScrollEffects />
@@ -270,26 +219,7 @@ export default async function Home() {
 
         <section id="attending" className="reveal section-shell scroll-mt-24 bg-white md:scroll-mt-28" aria-labelledby="attending-heading" data-reveal>
           <div className="section-frame">
-            <div className="text-center">
-              <p className="section-kicker">Classmate Roll Call</p>
-              <h2 id="attending-heading" className="section-heading">Who&apos;s Attending</h2>
-              <p className="section-subheading">
-                {attendees.length > 0 ? `${attendees.length} classmates are currently listed.` : 'Attendee names are loading or temporarily unavailable.'}
-              </p>
-              {attendees.length > 0 ? (
-                <p className="mx-auto mt-3 max-w-2xl text-base leading-relaxed text-stone-600 md:text-lg">
-                  Every name here is part of the story. We can&apos;t wait to celebrate together at the reunion.
-                </p>
-              ) : null}
-            </div>
-
-            {attendees.length > 0 ? (
-              <AttendeeBadges names={attendees} />
-            ) : (
-              <div className="mx-auto max-w-2xl rounded-2xl border border-stone-200 bg-stone-50 p-6 text-center text-stone-600 shadow-sm md:p-8 md:text-lg">
-                We&apos;ll publish the attendee list here as soon as it&apos;s available.
-              </div>
-            )}
+            <AttendeesSection />
           </div>
         </section>
 
