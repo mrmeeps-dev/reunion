@@ -2,6 +2,7 @@ import { ScrollEffects } from '@/components/scroll-effects';
 import { ProtectedEmailLink } from '@/components/protected-email-link';
 import { ProtectedPhoneLink } from '@/components/protected-phone-link';
 import { AttendeesSection } from '@/components/attendees-section';
+import { FridayPaymentGuideLine, FridayPriceCallout } from '@/components/friday-pricing';
 import { MemoriesGallery } from '@/components/memories-gallery';
 import { HotelsSection } from '@/components/hotels-section';
 import Image from 'next/image';
@@ -115,9 +116,7 @@ export default function Home() {
                 </div>
 
                 <div className="mt-5 space-y-3 md:mt-6">
-                  <p className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-base font-semibold leading-relaxed text-stone-800 md:text-lg">
-                    Price is $76 and must be paid by September 22nd.
-                  </p>
+                  <FridayPriceCallout />
                   <a
                     href="https://www.google.com/maps/search/?api=1&query=6541+E+Tanque+Verde+Rd+%2313%2C+Tucson%2C+AZ+85715"
                     className="modern-link block w-fit text-base leading-snug md:text-lg"
@@ -292,11 +291,7 @@ export default function Home() {
 
             <div className="mt-8 rounded-2xl border border-rose-200 bg-gradient-to-r from-rose-50 via-amber-50 to-stone-50 p-5 shadow-sm md:p-6">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-rose-700">Payment Quick Guide</p>
-              <p className="mt-2 text-base leading-relaxed text-stone-800 md:text-lg">
-                Friday dinner is <span className="font-semibold text-stone-900">$76 per person</span> (due by{' '}
-                <span className="font-semibold text-stone-900">September 22nd</span>). Saturday gathering is{' '}
-                <span className="font-semibold text-emerald-800">free</span>, with drinks and food available for purchase.
-              </p>
+              <FridayPaymentGuideLine />
               <p className="mt-2 text-sm text-stone-700 md:text-base">
                 Include your name and <span className="font-semibold text-stone-900">"Class of '76 reunion"</span> in the memo so we can match your payment quickly.
               </p>
