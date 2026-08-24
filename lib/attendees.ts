@@ -1,5 +1,5 @@
 export const ATTENDEES_CSV_URL =
-  'https://docs.google.com/spreadsheets/d/e/2PACX-1vRqieH3cEMyZEf4jFNCsOOzdApH2-rtt35rziQt3IDMjf1OxZLex0fU2mGd_XrC-TWTHhAMtWvwD8r3/pub?gid=1436665659&single=true&output=csv';
+  'https://docs.google.com/spreadsheets/d/e/2PACX-1vRqieH3cEMyZEf4jFNCsOOzdApH2-rtt35rziQt3IDMjf1OxZLex0fU2mGd_XrC-TWTHhAMtWvwD8r3/pub?gid=1850703428&single=true&output=csv';
 
 const csvSplitRegex = /,(?=(?:[^"]*"[^"]*")*[^"]*$)/;
 

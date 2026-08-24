@@ -129,7 +129,7 @@ export default function Home() {
 
                 <div className="mt-auto pt-5 md:pt-6">
                   <div className="space-y-3 rounded-2xl border border-stone-200 bg-gradient-to-br from-stone-50 to-stone-100 p-5">
-                    <p className="min-h-12 text-sm leading-relaxed text-stone-600">7:00 PM • Dinner, stories, and slideshow highlights</p>
+                    <p className="min-h-12 text-sm leading-relaxed text-stone-600">6:00 PM • Dinner, stories, and slideshow highlights</p>
                     <a href="https://www.google.com/maps/search/?api=1&query=6541+E+Tanque+Verde+Rd+%2313%2C+Tucson%2C+AZ+85715" className="inline-flex rounded-full border border-stone-300 px-4 py-2 text-sm font-semibold text-stone-800 transition-colors duration-200 hover:bg-white" target="_blank" rel="noopener noreferrer">Open directions</a>
                   </div>
                 </div>

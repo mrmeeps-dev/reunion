@@ -16,7 +16,7 @@ export const EVENT_VENUES: EventVenue[] = [
     id: 'savoy-opera-house',
     name: 'Savoy Opera House',
     eventLabel: 'The Big Event',
-    schedule: 'Friday, Oct 9 · 7:00 PM',
+    schedule: 'Friday, Oct 9 · 6:00 PM',
     addressLine1: '6541 E Tanque Verde Rd #13',
     city: 'Tucson',
     state: 'AZ',

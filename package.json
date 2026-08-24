@@ -14,7 +14,7 @@
     "prebuild": "npm run photos:build",
     "predev": "npm run photos:build",
     "build": "next build",
-    "start": "next start",
+    "start": "npm run build && npx --yes serve@14 out",
     "lint": "eslint .",
     "export": "next build",
     "cf:build": "opennextjs-cloudflare build",
