@@ -30,12 +30,12 @@ export function FridayPriceCallout() {
           <p className="font-semibold">
             <span className="text-stone-900">$76 early bird</span> through July 31 · <span className="text-stone-900">$86</span> after
           </p>
-          <p className="mt-1 text-sm font-medium text-stone-600 md:text-base">Pay by Sept 22 · No walk-up registration</p>
+          <p className="mt-1 text-sm font-medium text-stone-600 md:text-base">Pay by Sept 29 · No walk-up registration</p>
         </>
       ) : (
         <>
           <p className="font-semibold text-stone-900">$86 per person</p>
-          <p className="mt-1 text-sm font-medium text-stone-600 md:text-base">Pay by Sept 22 · No walk-up registration</p>
+          <p className="mt-1 text-sm font-medium text-stone-600 md:text-base">Pay by Sept 29 · No walk-up registration</p>
         </>
       )}
     </div>
@@ -50,12 +50,12 @@ export function FridayPaymentGuideLine() {
       {earlyBird ? (
         <>
           Friday dinner: <span className="font-semibold text-stone-900">$76 early bird</span> through July 31, then{' '}
-          <span className="font-semibold text-stone-900">$86</span> (pay by <span className="font-semibold text-stone-900">Sept 22</span>).
+          <span className="font-semibold text-stone-900">$86</span> (pay by <span className="font-semibold text-stone-900">Sept 29</span>).
         </>
       ) : (
         <>
           Friday dinner: <span className="font-semibold text-stone-900">$86 per person</span> (pay by{' '}
-          <span className="font-semibold text-stone-900">Sept 22</span>).
+          <span className="font-semibold text-stone-900">Sept 29</span>).
         </>
       )}{' '}
       Saturday gathering is <span className="font-semibold text-emerald-800">free</span>, with drinks and food available for purchase.
