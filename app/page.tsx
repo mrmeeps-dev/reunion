@@ -3,9 +3,18 @@ import { ProtectedEmailLink } from '@/components/protected-email-link';
 import { ProtectedPhoneLink } from '@/components/protected-phone-link';
 import { AttendeesSection } from '@/components/attendees-section';
 import { FridayPaymentGuideLine, FridayPriceCallout } from '@/components/friday-pricing';
+import { VenueUpdateBanner } from '@/components/venue-update-banner';
 import { MemoriesGallery } from '@/components/memories-gallery';
 import { HotelsSection } from '@/components/hotels-section';
+import { EVENT_VENUES, formatVenueAddress, venueDirectionsUrl } from '@/data/event-venues';
 import Image from 'next/image';
+
+const fridayVenue = EVENT_VENUES.find((venue) => venue.id === 'gardens-at-bear-canyon')!;
+const saturdayVenue = EVENT_VENUES.find((venue) => venue.id === 'three-canyon-beer-wine-garden')!;
+const fridayDirectionsUrl = venueDirectionsUrl(fridayVenue);
+const saturdayDirectionsUrl = venueDirectionsUrl(saturdayVenue);
+const fridayAddress = formatVenueAddress(fridayVenue);
+const saturdayAddress = formatVenueAddress(saturdayVenue);
 
 export default function Home() {
   return (
@@ -67,6 +76,8 @@ export default function Home() {
         </div>
       </nav>
 
+      <VenueUpdateBanner />
+
       <header className="relative flex min-h-[min(90vh,56rem)] items-center justify-center overflow-hidden px-4 py-16 sm:min-h-[84vh]">
         <div className="absolute inset-0 bg-hero-aerial bg-cover bg-center" role="img" aria-label="Desert landscape hero photograph" />
         <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-900/55 to-slate-900/20" aria-hidden="true" />
@@ -112,25 +123,30 @@ export default function Home() {
                 <div className="space-y-3">
                   <p className="text-sm font-medium uppercase tracking-wide text-stone-500">Friday, Oct 9</p>
                   <h3 className="text-2xl font-extrabold leading-tight tracking-tight text-stone-900 md:text-[1.65rem] lg:text-3xl">The Big Event</h3>
-                  <p className="text-lg leading-relaxed text-stone-700 md:text-xl">Ticketed dinner at the Savoy Opera House in Trail Dust Town.</p>
+                  <p className="text-lg leading-relaxed text-stone-700 md:text-xl">
+                    Ticketed dinner at <span className="font-semibold text-stone-900">{fridayVenue.name}</span>.
+                  </p>
+                  <p className="text-sm font-semibold uppercase tracking-wide text-rose-700 md:text-base">
+                    Updated location
+                  </p>
                 </div>
 
                 <div className="mt-5 space-y-3 md:mt-6">
                   <FridayPriceCallout />
                   <a
-                    href="https://www.google.com/maps/search/?api=1&query=6541+E+Tanque+Verde+Rd+%2313%2C+Tucson%2C+AZ+85715"
+                    href={fridayDirectionsUrl}
                     className="modern-link block w-fit text-base leading-snug md:text-lg"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    6541 E Tanque Verde Rd #13, Tucson, AZ 85715
+                    {fridayAddress}
                   </a>
                 </div>
 
                 <div className="mt-auto pt-5 md:pt-6">
                   <div className="space-y-3 rounded-2xl border border-stone-200 bg-gradient-to-br from-stone-50 to-stone-100 p-5">
                     <p className="min-h-12 text-sm leading-relaxed text-stone-600">6:00 PM • Dinner, stories, and slideshow highlights</p>
-                    <a href="https://www.google.com/maps/search/?api=1&query=6541+E+Tanque+Verde+Rd+%2313%2C+Tucson%2C+AZ+85715" className="inline-flex rounded-full border border-stone-300 px-4 py-2 text-sm font-semibold text-stone-800 transition-colors duration-200 hover:bg-white" target="_blank" rel="noopener noreferrer">Open directions</a>
+                    <a href={fridayDirectionsUrl} className="inline-flex rounded-full border border-stone-300 px-4 py-2 text-sm font-semibold text-stone-800 transition-colors duration-200 hover:bg-white" target="_blank" rel="noopener noreferrer">Open directions</a>
                   </div>
                 </div>
               </article>
@@ -147,19 +163,19 @@ export default function Home() {
                     Free! Drinks and food available for purchase.
                   </p>
                   <a
-                    href="https://www.google.com/maps/search/?api=1&query=4999+N+Sabino+Canyon+Rd%2C+Tucson%2C+AZ+85750"
+                    href={saturdayDirectionsUrl}
                     className="modern-link block w-fit text-base leading-snug md:text-lg"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    4999 N Sabino Canyon Rd, Tucson, AZ 85750
+                    {saturdayAddress}
                   </a>
                 </div>
 
                 <div className="mt-auto pt-5 md:pt-6">
                   <div className="space-y-3 rounded-2xl border border-stone-200 bg-gradient-to-br from-stone-50 to-stone-100 p-5">
                     <p className="min-h-12 text-sm leading-relaxed text-stone-600">4pm-9pm • Drop in, mingle, and catch up at your own pace</p>
-                    <a href="https://www.google.com/maps/search/?api=1&query=4999+N+Sabino+Canyon+Rd%2C+Tucson%2C+AZ+85750" className="inline-flex rounded-full border border-stone-300 px-4 py-2 text-sm font-semibold text-stone-800 transition-colors duration-200 hover:bg-white" target="_blank" rel="noopener noreferrer">Open directions</a>
+                    <a href={saturdayDirectionsUrl} className="inline-flex rounded-full border border-stone-300 px-4 py-2 text-sm font-semibold text-stone-800 transition-colors duration-200 hover:bg-white" target="_blank" rel="noopener noreferrer">Open directions</a>
                   </div>
                 </div>
               </article>

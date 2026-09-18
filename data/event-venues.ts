@@ -13,16 +13,16 @@ export type EventVenue = {
 
 export const EVENT_VENUES: EventVenue[] = [
   {
-    id: 'savoy-opera-house',
-    name: 'Savoy Opera House',
+    id: 'gardens-at-bear-canyon',
+    name: 'The Gardens at Bear Canyon',
     eventLabel: 'The Big Event',
     schedule: 'Friday, Oct 9 · 6:00 PM',
-    addressLine1: '6541 E Tanque Verde Rd #13',
+    addressLine1: '8991 E Tanque Verde Rd',
     city: 'Tucson',
     state: 'AZ',
-    zip: '85715',
-    lat: 32.2437,
-    lng: -110.8226,
+    zip: '85749',
+    lat: 32.2582,
+    lng: -110.7998,
   },
   {
     id: 'three-canyon-beer-wine-garden',
