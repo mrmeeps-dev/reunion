@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
-const STORAGE_KEY = 'venue-update-gardens-2026';
+/** New key so anyone who dismissed the incorrect Friday notice still sees this. */
+const STORAGE_KEY = 'venue-update-saturday-gardens-2026';
 
 export function VenueUpdateBanner() {
   const [visible, setVisible] = useState(false);
@@ -19,7 +20,7 @@ export function VenueUpdateBanner() {
         <p className="flex-1 text-sm leading-snug md:text-base">
           <span className="font-semibold text-rose-800">Venue update</span>
           <span className="text-stone-500"> — </span>
-          Friday dinner moved to The Gardens at Bear Canyon.{' '}
+          Saturday no-host meetup moved to The Gardens at Bear Canyon.{' '}
           <a href="#schedule" className="font-semibold text-stone-900 underline decoration-rose-300 underline-offset-2 hover:text-brand">
             See schedule
           </a>

@@ -35,8 +35,8 @@ export type TravelLocation =
       badge: string;
     };
 
-const FRIDAY_VENUE_ID = 'gardens-at-bear-canyon';
-const SATURDAY_VENUE_ID = 'three-canyon-beer-wine-garden';
+const FRIDAY_VENUE_ID = 'savoy-opera-house';
+const SATURDAY_VENUE_ID = 'gardens-at-bear-canyon';
 const NEAR_EVENT_RADIUS_MILES = 10;
 
 function toRadians(degrees: number): number {

@@ -9,8 +9,8 @@ import { HotelsSection } from '@/components/hotels-section';
 import { EVENT_VENUES, formatVenueAddress, venueDirectionsUrl } from '@/data/event-venues';
 import Image from 'next/image';
 
-const fridayVenue = EVENT_VENUES.find((venue) => venue.id === 'gardens-at-bear-canyon')!;
-const saturdayVenue = EVENT_VENUES.find((venue) => venue.id === 'three-canyon-beer-wine-garden')!;
+const fridayVenue = EVENT_VENUES.find((venue) => venue.id === 'savoy-opera-house')!;
+const saturdayVenue = EVENT_VENUES.find((venue) => venue.id === 'gardens-at-bear-canyon')!;
 const fridayDirectionsUrl = venueDirectionsUrl(fridayVenue);
 const saturdayDirectionsUrl = venueDirectionsUrl(saturdayVenue);
 const fridayAddress = formatVenueAddress(fridayVenue);
@@ -124,10 +124,7 @@ export default function Home() {
                   <p className="text-sm font-medium uppercase tracking-wide text-stone-500">Friday, Oct 9</p>
                   <h3 className="text-2xl font-extrabold leading-tight tracking-tight text-stone-900 md:text-[1.65rem] lg:text-3xl">The Big Event</h3>
                   <p className="text-lg leading-relaxed text-stone-700 md:text-xl">
-                    Ticketed dinner at <span className="font-semibold text-stone-900">{fridayVenue.name}</span>.
-                  </p>
-                  <p className="text-sm font-semibold uppercase tracking-wide text-rose-700 md:text-base">
-                    Updated location
+                    Ticketed dinner at the Savoy Opera House in Trail Dust Town.
                   </p>
                 </div>
 
@@ -155,7 +152,12 @@ export default function Home() {
                 <div className="space-y-3">
                   <p className="text-sm font-medium uppercase tracking-wide text-stone-500">Saturday, Oct 10</p>
                   <h3 className="text-2xl font-extrabold leading-tight tracking-tight text-stone-900 md:text-[1.65rem] lg:text-3xl">Casual Meetup</h3>
-                  <p className="text-lg leading-relaxed text-stone-700 md:text-xl">&ldquo;No-host&rdquo; event at Three Canyon Beer and Wine Garden.</p>
+                  <p className="text-lg leading-relaxed text-stone-700 md:text-xl">
+                    &ldquo;No-host&rdquo; event at <span className="font-semibold text-stone-900">{saturdayVenue.name}</span>.
+                  </p>
+                  <p className="text-sm font-semibold uppercase tracking-wide text-rose-700 md:text-base">
+                    Updated location
+                  </p>
                 </div>
 
                 <div className="mt-5 space-y-3 md:mt-6">
