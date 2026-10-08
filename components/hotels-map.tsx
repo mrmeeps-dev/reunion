@@ -193,12 +193,15 @@ export function HotelsMap({
   );
 
   return (
-    <MapContainer center={[32.26, -110.84]} zoom={11} className="hotels-map h-full w-full" scrollWheelZoom={false}>
+    <MapContainer center={[32.26, -110.84]} zoom={11} maxZoom={16} className="hotels-map h-full w-full" scrollWheelZoom={false}>
       <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
-        url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
-        subdomains="abcd"
-        maxZoom={20}
+        attribution='Tiles &copy; <a href="https://www.esri.com/">Esri</a> &mdash; Esri, HERE, Garmin, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"
+        maxZoom={16}
+      />
+      <TileLayer
+        url="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}"
+        maxZoom={16}
       />
       <FitAllBounds positions={allPositions} fitBoundsKey={fitBoundsKey} />
       <PanToActiveLocation

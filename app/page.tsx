@@ -4,7 +4,6 @@ import { ProtectedPhoneLink } from '@/components/protected-phone-link';
 import { AttendeesSection } from '@/components/attendees-section';
 import { FridayPaymentGuideLine, FridayPriceCallout } from '@/components/friday-pricing';
 import { VenueUpdateBanner } from '@/components/venue-update-banner';
-import { MemoriesGallery } from '@/components/memories-gallery';
 import { HotelsSection } from '@/components/hotels-section';
 import { EVENT_VENUES, formatVenueAddress, venueDirectionsUrl } from '@/data/event-venues';
 import Image from 'next/image';
@@ -205,32 +204,24 @@ export default function Home() {
           data-reveal
         >
           <div className="section-frame">
-            <div className="mx-auto max-w-3xl space-y-6 text-center md:space-y-8">
-              <p className="section-kicker">Help Build the Slideshow</p>
+            <div className="mx-auto max-w-3xl text-center">
+              <p className="section-kicker">Then &amp; Now</p>
               <h2 id="memories-heading" className="section-heading">Memories &amp; Media</h2>
-              <p className="text-2xl font-extrabold leading-snug tracking-tight text-slate-900 md:text-3xl">Share your favorite photos from the &rsquo;70s to today</p>
-              <p className="text-lg leading-relaxed text-stone-700 md:text-xl">
-                Send vintage photos and reunion memories to Ceddena Griggs at{' '}
-                <ProtectedEmailLink
-                  user="ceddenagriggs"
-                  domain="gmail.com"
-                  subject="Sahuaro Class of 1976 Photos for Slideshow"
-                  className="font-semibold text-stone-900 underline decoration-stone-300 underline-offset-4 transition-colors duration-200 hover:text-brand"
-                >
-                  ceddenagriggs@gmail.com
-                </ProtectedEmailLink>{' '}
-                so we can include them in the event presentation.
-              </p>
-              <ProtectedEmailLink
-                user="ceddenagriggs"
-                domain="gmail.com"
-                subject="Sahuaro Class of 1976 Photos for Slideshow"
-                className="inline-flex rounded-full border border-stone-300 bg-white px-6 py-3 text-base font-semibold text-stone-900 transition-colors duration-200 hover:bg-stone-100"
-              >
-                Submit photos
-              </ProtectedEmailLink>
+              <p className="section-subheading">A look back at the Class of &rsquo;76, from Sahuaro to today.</p>
             </div>
-            <MemoriesGallery />
+            <div className="mx-auto mt-10 max-w-4xl overflow-hidden rounded-2xl border border-stone-200 bg-black shadow-lg md:mt-12">
+              <div className="relative aspect-video w-full">
+                <iframe
+                  src="https://www.youtube-nocookie.com/embed/UqP9lfF4aLE"
+                  title="Sahuaro High School Class of 1976 memories video"
+                  className="absolute inset-0 h-full w-full border-0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                  loading="lazy"
+                />
+              </div>
+            </div>
           </div>
         </section>
 
