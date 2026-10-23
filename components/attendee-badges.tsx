@@ -63,7 +63,7 @@ export function AttendeeBadges({ names }: AttendeeBadgesProps) {
           className="mt-5 inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-semibold text-stone-700 shadow-sm transition-colors duration-200 hover:bg-stone-100 md:hidden"
           aria-expanded={isExpandedMobile}
         >
-          {isExpandedMobile ? 'Show fewer names' : `See ${hiddenMobileCount} others joining`}
+          {isExpandedMobile ? 'Show fewer names' : `See ${hiddenMobileCount} others who attended`}
           <span className={`text-xs transition-transform duration-200 ${isExpandedMobile ? 'rotate-180' : ''}`} aria-hidden="true">
             ▾
           </span>
@@ -77,7 +77,7 @@ export function AttendeeBadges({ names }: AttendeeBadgesProps) {
           className="mt-5 hidden items-center gap-2 rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-semibold text-stone-700 shadow-sm transition-colors duration-200 hover:bg-stone-100 md:inline-flex"
           aria-expanded={isExpandedDesktop}
         >
-          {isExpandedDesktop ? 'Show fewer names' : `See ${hiddenDesktopCount} others joining`}
+          {isExpandedDesktop ? 'Show fewer names' : `See ${hiddenDesktopCount} others who attended`}
           <span className={`text-xs transition-transform duration-200 ${isExpandedDesktop ? 'rotate-180' : ''}`} aria-hidden="true">
             ▾
           </span>
