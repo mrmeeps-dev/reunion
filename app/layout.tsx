@@ -17,7 +17,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: 'Sahuaro High School Class of 1976 — 50th Reunion',
   description:
-    'Sahuaro High School Class of 1976 — 50th Reunion, October 9–10, 2026 in Tucson, Arizona.',
+    'Thank you for celebrating the Sahuaro High School Class of 1976 50th Reunion, October 9–10, 2026 in Tucson, Arizona.',
   icons: {
     icon: '/head-mascot.png',
     apple: '/head-mascot.png',
